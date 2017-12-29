@@ -43,13 +43,19 @@ module.exports = {
   module: {
     rules: [
       {
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        // options: {
+        //   formatter: require('eslint-friendly-formatter')
+        // }
+      },
+      {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env']
-          }
+          loader: 'babel-loader'
         }
       },
       {
@@ -73,8 +79,8 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          publicPath: "../",
           fallback: "style-loader",
+          publicPath: "../",
           use: [
             { loader: 'css-loader', options: { sourceMap: true } },
             { loader: 'postcss-loader', options: { sourceMap: true } },
@@ -144,6 +150,7 @@ module.exports = {
     }),
     new ExtractTextPlugin({
       filename: '/css/[name].css',
+      allChunks: true,
     }),
     new CleanWebpackPlugin(['dist']),
   ],

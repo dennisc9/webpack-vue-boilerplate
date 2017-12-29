@@ -32,7 +32,7 @@ export default {
   },
   created: {
 
-  }
+  },
   mounted: function () {
 
   }
