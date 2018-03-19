@@ -23,14 +23,36 @@ lib-cov
 *.dat
 *.out
 *.pid
+*.pid.lock
 *.gz
 pids
-logs
 results
-node_modules
+
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# jest test coverage
+.jest_coverage
+
+# Optional eslint cache
+.eslintcache
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
 
  ## Sass #
 #########
@@ -47,4 +69,4 @@ yarn-error.log*
 
  ## Distribution files #
 #######################
-/dist/
+dist/

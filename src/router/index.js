@@ -1,16 +1,17 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 
-import VSample from '@/slides/VSample/VSample'
+import Home from 'pages/Home'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
 const routes = [
-  { path: '/', name: 'sample', component: VSample, id: -1, props: {'slideN': -1} },
+  {
+    path: '*',
+    component: Home
+  }
 ]
 
-const router = new VueRouter({
+export default new Router({
   routes
 })
-
-export default router
