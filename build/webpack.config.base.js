@@ -1,9 +1,12 @@
 'use strict'
 
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const utils = require('./utils')
 
+let environment = (process.env.webpackEnvironment) ? process.env.webpackEnvironment : process.env.NODE_ENV;
+console.log("environment == ", environment);
 
 /*********************************
 * Entry
@@ -43,7 +46,17 @@ const plugins = [
     from: utils.resolve('static/images'),
     to: utils.resolve('dist/static/images'),
     toType: 'dir'
-  }])
+  }]),
+  new webpack.EnvironmentPlugin({
+    NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
+    DEBUG: false
+  }),
+  new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery',
+    Vue: ['vue/dist/vue.esm.js', 'default'],
+    // _map: ['lodash', 'map']
+  })
 ];
 
 module.exports = {
@@ -56,7 +69,6 @@ module.exports = {
       'pages': utils.resolve('src/pages'),
       'static': utils.resolve('static'),
       'components': utils.resolve('src/components'),
-      'vue$': 'vue/dist/vue.esm.js',
       '@': utils.resolve('src'),
       '@fortawesome/fontawesome-free-solid$': '@fortawesome/fontawesome-free-solid/shakable.es.js',
       '@fortawesome/fontawesome-free-regular$': '@fortawesome/fontawesome-free-regular/shakable.es.js'
