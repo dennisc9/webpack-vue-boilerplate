@@ -33,18 +33,9 @@ module.exports = merge(baseConfig, {
           loaders: {
             scss: [            
               MiniCssExtractPlugin.loader,
-              {
-                loader: 'css-loader',
-                options: { sourceMap: true, importLoaders: false }
-              },
-              {
-                loader: 'postcss-loader',
-                options: { sourceMap: true }
-              },
-              {
-                loader: 'sass-loader',
-                options: { sourceMap: true }
-              }
+              'css-loader',
+              'postcss-loader',
+              'sass-loader',
             ]
           }
         }
@@ -53,10 +44,6 @@ module.exports = merge(baseConfig, {
   },
   plugins: [
     // Extract Imported css into own file
-    //new ExtractTextPlugin({
-    //  filename: '/css/[name].bundle.min.css',
-      //allChunks: true,
-    //}),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
