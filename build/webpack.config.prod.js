@@ -8,9 +8,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = merge(baseConfig, {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   output: {
-    filename: 'js/[name].bundle.min.js'
+    filename: 'js/[name].bundle.min.[hash:7].js'
   },
   optimization: {
     splitChunks: {
@@ -33,9 +33,18 @@ module.exports = merge(baseConfig, {
           loaders: {
             scss: [            
               MiniCssExtractPlugin.loader,
-              'css-loader',
-              'postcss-loader',
-              'sass-loader',
+              {
+                loader: 'css-loader',
+                options: { sourceMap: true }
+              },
+              {
+                loader: 'postcss-loader',
+                options: { sourceMap: true }
+              },
+              {
+                loader: 'sass-loader',
+                options: { sourceMap: true }
+              }
             ]
           }
         }
@@ -48,22 +57,22 @@ module.exports = merge(baseConfig, {
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename: 'css/[name].bundle.min.css',
-      chunkFilename: "[id].css"
+      chunkFilename: "css/[name].[id].css"
+    }),
+    // Minify JS
+    new UglifyJsPlugin({
+      sourceMap: true,
+      uglifyOptions: {
+        mangle: {
+          keep_fnames: true
+        },
+        compress: {
+          warnings: false
+        },
+        output: {
+          comments: false
+        },
+      }
     })
-    // // Minify JS
-    // new UglifyJsPlugin({
-    //   sourceMap: true,
-    //   uglifyOptions: {
-    //     mangle: {
-    //       keep_fnames: true
-    //     },
-    //     compress: {
-    //       warnings: false
-    //     },
-    //     output: {
-    //       comments: false
-    //     },
-    //   }
-    // })
   ]
 })
