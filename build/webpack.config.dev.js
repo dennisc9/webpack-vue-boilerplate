@@ -10,6 +10,8 @@ const PORT = 8080
 module.exports = merge(baseConfig, {
   mode: 'development',
 
+  devtool: 'cheap-module-source-map',
+  
   devServer: {
     clientLogLevel: 'warning',
     hot: true,
@@ -29,5 +31,35 @@ module.exports = merge(baseConfig, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin()
-  ]
+  ],
+
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            scss: [
+              {
+                loader: 'vue-style-loader'
+              },
+              {
+                loader: 'css-loader',
+                options: { sourceMap: true }
+              },
+              {
+                loader: 'postcss-loader',
+                options: { sourceMap: true }
+              },
+              {
+                loader: 'sass-loader',
+                options: { sourceMap: true }
+              }
+            ]
+          }
+        }
+      },
+    ]
+  }
 })

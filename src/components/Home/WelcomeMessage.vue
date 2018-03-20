@@ -4,6 +4,10 @@
   </div>
 </template>
 
+<style lang="scss">
+@import "./sass/welcome";
+</style>
+
 <script>
 export default {
   props: {

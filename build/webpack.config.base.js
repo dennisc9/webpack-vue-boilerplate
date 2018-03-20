@@ -1,12 +1,13 @@
 'use strict'
 
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const utils = require('./utils')
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const utils = require('./utils');
 
 let environment = (process.env.webpackEnvironment) ? process.env.webpackEnvironment : process.env.NODE_ENV;
-console.log("environment == ", environment);
+//console.log("environment == ", environment);
 
 /*********************************
 * Entry
@@ -29,13 +30,26 @@ function siteScriptsAndStyles(name) {
 let entry = {
   'vendor': ['./src/vendor.js'],
   'main': siteScriptsAndStyles('app')
-}
+};
 
 /*********************************
 * Plugins
 *********************************/
+// the path(s) that should be cleaned
+let pathsToClean = [
+  'dist'
+];
+
+// the clean options to use
+let cleanOptions = {
+  root: utils.resolve('./'),
+  //exclude:  ['shared.js'],
+  verbose:  true,
+  dry:      false
+};
 
 const plugins = [
+  new CleanWebpackPlugin(pathsToClean, cleanOptions),
   require('autoprefixer'),
   new HtmlWebpackPlugin({
     filename: 'index.html',
@@ -78,14 +92,10 @@ module.exports = {
   module: {
     rules: [
       {
+        enforce: 'pre',
         test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
         exclude: /node_modules/,
-        enforce: 'pre'
-      }, 
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'eslint-loader'
       }, 
       {
         test: /\.js$/,
