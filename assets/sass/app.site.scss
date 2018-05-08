@@ -5,26 +5,3 @@
 @import "components/font-awesome";
 
 @import "utils/utils";
-
-.hidden {
-  display: none;
-
-  &.on {
-    display: block;
-  }
-}
-
-/* flex fixes */
-* {
-  flex-shrink: 1;
-}
-
-/* Firefox input fix */
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
-}
-input[type=number] {
-  -moz-appearance:textfield;
-}

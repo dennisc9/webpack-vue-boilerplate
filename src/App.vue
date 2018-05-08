@@ -9,28 +9,20 @@
 </style>
 
 <script>
-// import store from "../vuex"
-// import { data } from '../mixins/data'
 
 export default {
-  mixins: [ ],
+  mixins: [],
   data: () => {
     return {}
   },
-  computed: { },
+  computed: {},
   watch: {
     '$route' (to, from) {
 
     }
   },
-  created: function () {
-
-  },
-  mounted: function () {
-
-  },
-  methods: {
-
-  }
+  created: function () {},
+  mounted: function () {},
+  methods: {}
 }
 </script>

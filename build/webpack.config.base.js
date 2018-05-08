@@ -45,13 +45,18 @@ let cleanOptions = {
   root: utils.resolve('./'),
   //exclude:  ['shared.js'],
   verbose:  true,
-  dry:      false
+  dry:      false,
+  allowExternal: true,
+  watch: true
 };
+
+console.log("cleanOptions.root = ", cleanOptions.root);
 
 const plugins = [
   new CleanWebpackPlugin(pathsToClean, cleanOptions),
   require('autoprefixer'),
   new HtmlWebpackPlugin({
+    title: 'Vue Webpack Plugin',
     filename: 'index.html',
     template: 'index.html',
     inject: true
@@ -83,6 +88,8 @@ module.exports = {
       'pages': utils.resolve('src/pages'),
       'static': utils.resolve('static'),
       'components': utils.resolve('src/components'),
+      'mixins': utils.resolve('src/mixins'),
+      'data': utils.resolve('src/data'),
       '@': utils.resolve('src'),
       '@fortawesome/fontawesome-free-solid$': '@fortawesome/fontawesome-free-solid/shakable.es.js',
       '@fortawesome/fontawesome-free-regular$': '@fortawesome/fontawesome-free-regular/shakable.es.js'
@@ -96,20 +103,20 @@ module.exports = {
         test: /\.(js|vue)$/,
         exclude: /node_modules/,
         loader: 'eslint-loader'
-      }, 
+      },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         query: {
           compact: 'false'
         }
-      }, 
+      },
       {
         test: /\.css$/,
         use: [
           'style-loader',
-          { 
-            loader: 'css-loader', options: { importLoaders: 1 } 
+          {
+            loader: 'css-loader', options: { importLoaders: 1 }
           },
           'postcss-loader'
         ]
@@ -134,7 +141,7 @@ module.exports = {
               options: { sourceMap: true }
            }
           ]
-      }, 
+      },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -142,7 +149,7 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('images/[name].[hash:7].[ext]')
         }
-      }, 
+      },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         loader: 'url-loader',
@@ -150,7 +157,7 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
         }
-      }, 
+      },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',

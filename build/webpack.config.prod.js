@@ -2,6 +2,8 @@
 
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config.base');
+const utils = require('./utils');
+const path = require('path')
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -10,7 +12,8 @@ module.exports = merge(baseConfig, {
   mode: 'production',
   devtool: 'cheap-module-source-map',
   output: {
-    filename: 'js/[name].bundle.min.[hash:7].js'
+    filename: 'js/[name].bundle.min.[hash:7].js',
+    path: utils.resolve('dist')
   },
   optimization: {
     splitChunks: {
@@ -31,7 +34,7 @@ module.exports = merge(baseConfig, {
         options: {
           hotReload: true,
           loaders: {
-            scss: [            
+            scss: [
               MiniCssExtractPlugin.loader,
               {
                 loader: 'css-loader',
@@ -56,7 +59,7 @@ module.exports = merge(baseConfig, {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: 'css/[name].bundle.min.css',
+      filename: 'css/[name].bundle.min[hash:7].css',
       chunkFilename: "css/[name].[id].css"
     }),
     // Minify JS

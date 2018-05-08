@@ -1,11 +1,7 @@
 //
 // Measurements
 //
-$app-height: 750px; // height of the full property search application (note ~ must be in px's for google maps to instantiate)
-$app-banner-height: 43px; // height of the banner over the map and table
-
-$app-sidebar-width: 270px;
-
+$app-height: 750px;
 $app-banner-btn-height: 25px;
 
 //
@@ -26,4 +22,4 @@ $color-secondary-accent-light-grey: #dbd9d6;
 //
 // Font-sizes
 //
-$font-size-user-filter: 13px;
+$font-size: 1rem;
