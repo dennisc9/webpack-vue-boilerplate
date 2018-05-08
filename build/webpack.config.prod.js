@@ -29,13 +29,6 @@ module.exports = merge(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          hotReload: true
-        }
-      },
-      {
         test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
