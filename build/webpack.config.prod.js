@@ -32,26 +32,27 @@ module.exports = merge(baseConfig, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          hotReload: true,
-          loaders: {
-            scss: [
-              MiniCssExtractPlugin.loader,
-              {
-                loader: 'css-loader',
-                options: { sourceMap: true }
-              },
-              {
-                loader: 'postcss-loader',
-                options: { sourceMap: true }
-              },
-              {
-                loader: 'sass-loader',
-                options: { sourceMap: true }
-              }
-            ]
-          }
+          hotReload: true
         }
-      }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true }
+          },
+          {
+            loader: 'postcss-loader',
+            options: { sourceMap: true }
+          },
+          {
+            loader: 'sass-loader',
+            options: { sourceMap: true }
+          }
+        ]
+      },
     ]
   },
   plugins: [
@@ -59,7 +60,7 @@ module.exports = merge(baseConfig, {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: 'css/[name].bundle.min[hash:7].css',
+      filename: 'css/[name].bundle.min.[hash:7].css',
       chunkFilename: "css/[name].[id].css"
     }),
     // Minify JS

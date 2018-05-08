@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const utils = require('./utils');
 
 let environment = (process.env.webpackEnvironment) ? process.env.webpackEnvironment : process.env.NODE_ENV;
@@ -46,8 +47,7 @@ let cleanOptions = {
   //exclude:  ['shared.js'],
   verbose:  true,
   dry:      false,
-  allowExternal: true,
-  watch: true
+  allowExternal: true
 };
 
 console.log("cleanOptions.root = ", cleanOptions.root);
@@ -56,7 +56,7 @@ const plugins = [
   new CleanWebpackPlugin(pathsToClean, cleanOptions),
   require('autoprefixer'),
   new HtmlWebpackPlugin({
-    title: 'Vue Webpack Plugin',
+    title: 'Vue Webpack Boilerplate',
     filename: 'index.html',
     template: 'index.html',
     inject: true
@@ -66,6 +66,7 @@ const plugins = [
     to: utils.resolve('dist/static/images'),
     toType: 'dir'
   }]),
+  new VueLoaderPlugin(), // required now with vue-loader 15.0
   new webpack.EnvironmentPlugin({
     NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
     DEBUG: false
@@ -82,7 +83,7 @@ module.exports = {
   entry: entry,
   plugins: plugins,
   resolve: {
-    extensions: ['.js', '.vue', '.json', '.scss'], // not sure .scss works here
+    extensions: ['.js', '.vue', '.json'], // not sure .scss works here
     alias: {
       'assets': utils.resolve('assets'),
       'pages': utils.resolve('src/pages'),
@@ -107,9 +108,13 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        query: {
-          compact: 'false'
-        }
+        exclude: file => (
+          /node_modules/.test(file) &&
+          !/\.vue\.js/.test(file)
+        ),
+        // query: {
+        //   compact: 'false'
+        // }
       },
       {
         test: /\.css$/,
@@ -120,27 +125,6 @@ module.exports = {
           },
           'postcss-loader'
         ]
-      },
-      {
-        test: /\.site.scss$/,
-        exclude: ['node_modules'],
-          use: [
-            {
-              loader: "style-loader"
-            },
-            {
-              loader: 'css-loader',
-              options: { sourceMap: true }
-            },
-            {
-              loader: 'postcss-loader',
-              options: { sourceMap: true }
-            },
-            {
-              loader: 'sass-loader',
-              options: { sourceMap: true }
-           }
-          ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
