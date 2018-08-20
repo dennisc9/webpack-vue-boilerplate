@@ -1,0 +1,31 @@
+@mixin clearfix {
+  &::after {
+    clear: both;
+    content: ' ';
+    display: block;
+  }
+}
+
+$thumb-size: 20px;
+@mixin style-thumb {
+  //box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+  border: 2px solid #d8171f;
+  height: $thumb-size;
+  width: $thumb-size;
+  border-radius: 50%;
+  background-color: #b7b7b7;
+  cursor: pointer;
+  margin-top: -4px;
+}
+
+$range-height: 11px;
+$range-color: #f2f3f3;
+@mixin style-track {
+  width: 100%;
+  height: $range-height;
+  cursor: pointer;
+  //box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: $range-color;
+  //border-radius: 5px;
+  //border: 0.2px solid #010101;
+}

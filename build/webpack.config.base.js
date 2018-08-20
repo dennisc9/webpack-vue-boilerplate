@@ -3,7 +3,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const utils = require('./utils');
 
@@ -18,7 +17,7 @@ function siteScripts(name) {
 }
 
 function siteStyles(name) {
-  return `./assets/sass/${name}.site.scss`;
+  return `./src/sass/${name}.site.scss`;
 }
 
 function siteScriptsAndStyles(name) {
@@ -29,44 +28,23 @@ function siteScriptsAndStyles(name) {
 }
 
 let entry = {
-  'vendor': ['./src/vendor.js'],
   'main': siteScriptsAndStyles('app')
 };
 
-/*********************************
-* Plugins
-*********************************/
-// the path(s) that should be cleaned
-let pathsToClean = [
-  'dist'
-];
-
-// the clean options to use
-let cleanOptions = {
-  root: utils.resolve('./'),
-  //exclude:  ['shared.js'],
-  verbose:  true,
-  dry:      false,
-  allowExternal: true
-};
-
-console.log("cleanOptions.root = ", cleanOptions.root);
-
 const plugins = [
-  new CleanWebpackPlugin(pathsToClean, cleanOptions),
   require('autoprefixer'),
+  new VueLoaderPlugin(),
   new HtmlWebpackPlugin({
-    title: 'Vue Webpack Boilerplate',
+    title: 'Test App',
     filename: 'index.html',
     template: 'index.html',
     inject: true
   }),
   new CopyWebpackPlugin([{
-    from: utils.resolve('static/images'),
-    to: utils.resolve('dist/static/images'),
+    from: utils.resolve('assets/images'),
+    to: utils.resolve('dist/assets/images'),
     toType: 'dir'
   }]),
-  new VueLoaderPlugin(), // required now with vue-loader 15.0
   new webpack.EnvironmentPlugin({
     NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
     DEBUG: false
@@ -83,11 +61,10 @@ module.exports = {
   entry: entry,
   plugins: plugins,
   resolve: {
-    extensions: ['.js', '.vue', '.json'], // not sure .scss works here
+    extensions: ['.js', '.vue', '.json', '.scss'], // not sure .scss works here
     alias: {
       'assets': utils.resolve('assets'),
       'pages': utils.resolve('src/pages'),
-      'static': utils.resolve('static'),
       'components': utils.resolve('src/components'),
       'mixins': utils.resolve('src/mixins'),
       'data': utils.resolve('src/data'),
@@ -107,20 +84,32 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: file => (
-          /node_modules/.test(file) &&
-          !/\.vue\.js/.test(file)
-        ),
-        // query: {
-        //   compact: 'false'
-        // }
+        exclude: /node_modules/,
+        use: 'babel-loader'
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          hotReload: true
+          loaders: {
+            scss: [
+              {
+                loader: 'vue-style-loader'
+              },
+              {
+                loader: 'css-loader',
+                options: { sourceMap: true }
+              },
+              {
+                loader: 'postcss-loader',
+                options: { sourceMap: true }
+              },
+              {
+                loader: 'sass-loader',
+                options: { sourceMap: true }
+              }
+            ]
+          }
         }
       },
       {
@@ -137,25 +126,44 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          // limit: 10000,
           name: utils.assetsPath('images/[name].[hash:7].[ext]')
+          // name: '[name].[hash:7].[ext]',
+          // publicPath: utils.assetsPath('images/')
         }
       },
       {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        test: /\.(mp4|webm|ogg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('videos/[name].[ext]')
+        }
+      },
+      {
+        test: /\.(mp3|wav|flac|aac)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
+          // name: '[name].[hash:7].[ext]',
+          // publicPath: utils.assetsPath('media/')
         }
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-        }
+        test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options:
+          {
+            // name: utils.assetsPath('fonts/[name].[ext]')
+            // name: '[path]/[name].[ext]'
+            // name: utils.cssPath('fonts/[name].[ext]')
+            name: '[name].[ext]',
+            outputPath: 'css/fonts/',
+            publicPath: '../css/fonts/'
+          }
+        }]
       }
     ]
   }

@@ -7,12 +7,32 @@ const path = require('path')
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+/*********************************
+* Clean Webpack Plugins
+*********************************/
+// the path(s) that should be cleaned
+let pathsToClean = [
+  'dist/*'
+];
+
+// the clean options to use
+let cleanOptions = {
+  root: path.join(__dirname, '..', '/'),
+  verbose:  true,
+  dry:      false,
+  allowExternal: true,
+  watch: true
+};
+
+console.log("cleanOptions.root = ", cleanOptions.root);
 
 module.exports = merge(baseConfig, {
   mode: 'production',
   devtool: 'cheap-module-source-map',
   output: {
-    filename: 'js/[name].bundle.min.[hash:7].js',
+    filename: 'js/[name].bundle.min.js',
     path: utils.resolve('dist')
   },
   optimization: {
@@ -41,19 +61,24 @@ module.exports = merge(baseConfig, {
             options: { sourceMap: true }
           },
           {
+            loader: 'resolve-url-loader',
+            options: { sourceMap: true }
+          },
+          {
             loader: 'sass-loader',
             options: { sourceMap: true }
           }
         ]
-      },
+      }
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(pathsToClean, cleanOptions),
     // Extract Imported css into own file
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: 'css/[name].bundle.min.[hash:7].css',
+      filename: 'css/[name].bundle.min.css',
       chunkFilename: "css/[name].[id].css"
     }),
     // Minify JS
