@@ -8,7 +8,12 @@ module.exports = {
   },
 
   assetsPath: function (_path) {
-    const assetsSubDirectory = 'static'
+    const assetsSubDirectory = 'assets'
+    return path.posix.join(assetsSubDirectory, _path)
+  },
+  
+  cssPath: function (_path) {
+    const assetsSubDirectory = 'css'
     return path.posix.join(assetsSubDirectory, _path)
   }
 }

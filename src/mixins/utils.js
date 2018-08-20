@@ -4,14 +4,14 @@ export const utils = {
       is Object Empty?
       return: Boolean
     */
-    hasObject: function(obj) {
+    hasObject: function (obj) {
       return Object.keys(obj).length !== 0;
     },
     /*
       is String Empty, null or blank
     */
-    isStringEmpty: function(str) {
-      if(str)
+    isStringEmpty: function (str) {
+      if (str)
         return true;
       else
         return false;

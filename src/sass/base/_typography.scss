@@ -1,0 +1,110 @@
+@import 'utils/variables';
+
+.footnote {
+  font-size: 0.9rem;
+  margin: 0.2rem 0;
+}
+
+/*
+ * HELPER
+ */
+.text-hang {
+  text-indent: -0.5em;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-heavy {
+  font-weight: $type-heavy !important;
+}
+
+.text-extra-bold {
+  font-weight: $type-extra-bold !important;
+}
+
+.text-condensed {
+  letter-spacing: -0.03rem;
+}
+
+/*
+ * Base
+ */
+h1,
+%h1 {
+  font-size: 4rem; // 64px
+  font-weight: $type-bold;
+  margin: 1rem 0;
+}
+
+h2,
+%h2 {
+  font-size: 3rem; // 48px
+  font-weight: $type-extra-bold;
+  margin: 1rem 0;
+}
+
+h3,
+%h3 {
+  font-size: 1.9rem; // 32px
+  margin: 1rem 0;
+}
+
+h4,
+%h4 {
+  font-size: 1.5rem; // 24px
+  font-weight: $type-extra-bold;
+  margin: 1rem 0;
+}
+
+h5,
+%h5 {
+  font-size: 1.25rem; // 20px
+  margin: 1rem 0;
+}
+
+h6,
+%h6 {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+p,
+.p {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+@media screen and (max-width: $size-mobile) {
+  h1,
+  %h1 {
+    font-size: 1.75rem;
+  }
+
+  h4,
+  %h4 {
+    font-size: 1.5rem;
+  }
+}
+
+/* In type partial
+@font-face {
+  font-family: 'custom';
+  src: url('url.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+*/
