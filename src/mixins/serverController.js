@@ -47,6 +47,6 @@ export const serverController = {
     },
     loginFailure: function () {
       this.loginSuccess();
-    },
+    }
   }
 };
