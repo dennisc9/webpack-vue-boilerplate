@@ -11,9 +11,17 @@
 <script>
 
 export default {
+  name: "App",
+  components: {},
+  extends: '',
   mixins: [],
-  data: () => {
-    return {}
+  props: {
+
+  },
+  data: function () {
+    return {
+
+    }
   },
   computed: {},
   watch: {
@@ -21,8 +29,14 @@ export default {
 
     }
   },
+  beforeCreate: function () {},
   created: function () {},
+  beforeMount: function () {},
   mounted: function () {},
+  beforeUpdate: function () {},
+  updated: function () {},
+  beforeDestroy: function () {},
+  destroyed: function () {},
   methods: {}
 }
 </script>

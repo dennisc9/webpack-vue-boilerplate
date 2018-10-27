@@ -1,27 +1,24 @@
 <template>
-  <div>
-    <h3>Hellow {{ name }} from my Vue.js page, built with Webpack 4!</h3>
-  </div>
+  <h1 class="template">Hola I'm your Template</h1>
 </template>
 
-<style lang="scss">
-@import "./sass/welcome";
+<style lang="scss" scoped>
+  @import "./sass/template";
 </style>
 
 <script>
 export default {
-  name: 'WelcomeMessage',
+  name: 'Template',
   components: {},
   extends: '',
   mixins: [],
   props: {
-    name: {
-      type: String,
-      required: true
-    }
+
   },
   data: function () {
-    return {}
+    return {
+
+    }
   },
   computed: {},
   watch: {},
