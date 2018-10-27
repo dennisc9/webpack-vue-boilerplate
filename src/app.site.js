@@ -5,6 +5,13 @@ import router from './router';
 import store from './vuex';
 import analytics from 'vue-analytics';
 
+// Font awesome
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+library.add(faThumbsUp);
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 console.log("##### app.site.js :: process.env.NODE_ENV === ", process.env.NODE_ENV)
 
 let gaDebug = {};
